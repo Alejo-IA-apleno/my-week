@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY WEEK — Objetivos personales</title>
+<style>
+:root{
+  --bg:#f6f7fb;--panel:#ffffff;--text:#172033;--muted:#7b8497;--line:#e9edf4;
+  --accent:#6658d3;--accent2:#eeecff;--shadow:0 12px 34px rgba(38,45,75,.065);
+  --danger:#d45565;--sidebar:#17182b;--sidebar-muted:#a8abc2;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 82% 0%,#efedff 0,transparent 33%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;letter-spacing:-.1px}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:11px;padding:11px 15px;background:linear-gradient(135deg,#7568e5,#5d51ca);color:#fff;font-weight:700;transition:.15s;box-shadow:0 4px 10px #6558d41a}
+button:hover{filter:brightness(.95);transform:translateY(-1px)}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+button.secondary{background:#f1f2f8;color:#4c5367;box-shadow:none}
+button.ghost{background:transparent;color:var(--muted);padding:8px;box-shadow:none}
+button.danger{background:#fff0f0;color:var(--danger)}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside{background:linear-gradient(165deg,#1b1b31 0%,#171827 65%,#20203a 100%);color:#fff;padding:30px 18px;display:flex;flex-direction:column;gap:30px;box-shadow:8px 0 30px #1b1b3010}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px}
+.brand-mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#8b7cff,#6154d4);display:grid;place-items:center;font-size:21px;box-shadow:0 7px 18px #6558d455}
+.brand h1{font-size:18px;letter-spacing:1.5px;margin:0}
+.brand small{display:block;color:var(--sidebar-muted);font-size:10px;letter-spacing:1.4px;margin-top:3px}
+.nav{display:grid;gap:7px}
+.nav button{background:transparent;color:var(--sidebar-muted);text-align:left;font-weight:550;padding:12px 14px}
+.nav button.active,.nav button:hover{background:linear-gradient(90deg,#35324f,#29283e);color:white;transform:none;box-shadow:inset 3px 0 #9589ff}
+.nav button span{margin-right:10px}
+.side-note{margin-top:auto;border:1px solid #34344b;background:#222238;border-radius:16px;padding:16px;color:var(--sidebar-muted);font-size:12px;line-height:1.7}
+.side-note strong{display:block;color:#fff;margin-bottom:5px}
+main{padding:38px clamp(20px,4vw,62px);max-width:1500px;width:100%;margin:0 auto}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:30px}
+.eyebrow{font-size:11px;letter-spacing:1.7px;font-weight:750;color:var(--muted);text-transform:uppercase}
+h2{font-size:34px;letter-spacing:-1.2px;margin:8px 0 0;font-weight:800}
+.subtitle{color:var(--muted);margin:8px 0 0;font-size:14px}
+.top-actions{display:flex;gap:9px;align-items:center}
+.card{background:var(--panel);border:1px solid #e9edf4;border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:18px}
+.stat-label{font-size:12px;color:var(--muted);font-weight:600}
+.stat-value{font-size:30px;letter-spacing:-1px;font-weight:750;margin:12px 0 5px}
+.stat-foot{font-size:12px;color:var(--muted)}
+.stat-icon{float:right;background:#f0eeff;color:var(--accent);border-radius:13px;width:42px;height:42px;display:grid;place-items:center}
+.progress-card{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center;margin-bottom:18px;background:linear-gradient(135deg,#fff 0%,#fbfaff 100%)}
+.progress-number{font-size:52px;font-weight:850;letter-spacing:-2.5px;color:var(--accent);line-height:1.15}
+.progress-track{height:12px;background:#eeedf5;border-radius:99px;overflow:hidden;margin:17px 0 12px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#7d70ed,#5c50ce);border-radius:99px;transition:width .25s}
+.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.mini-summary{background:linear-gradient(145deg,#f5f3ff,#f7f8fc);border:1px solid #eeebff;border-radius:17px;padding:20px}
+.mini-summary .big{font-size:25px;font-weight:750;margin:6px 0}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:25px 0 13px}
+.section-head h3{margin:0;font-size:17px}
+.section-head p{color:var(--muted);font-size:12px;margin:5px 0 0}
+.goal-list{display:grid;gap:10px}
+.goal{background:white;border:1px solid #e9edf4;border-radius:17px;padding:17px 19px;display:grid;grid-template-columns:1fr auto;gap:15px;transition:transform .16s,box-shadow .16s,border-color .16s}.goal:hover{transform:translateY(-2px);box-shadow:0 10px 25px #29334b0b;border-color:#dcd8ff}
+.goal-top{display:flex;align-items:center;gap:10px}
+.check{width:23px;height:23px;border:1.5px solid #cbd4dd;border-radius:7px;background:white;display:grid;place-items:center;color:white;padding:0;font-size:13px}
+.check.done{background:var(--accent);border-color:var(--accent);box-shadow:0 4px 10px #6658d333}
+.goal-name{font-weight:700;font-size:14px}
+.goal.completed .goal-name{text-decoration:line-through;color:#8a96a5}
+.category{display:inline-block;margin:8px 0 0 33px;font-size:10px;font-weight:750;letter-spacing:.25px;color:#6557c7;background:#f0eeff;padding:5px 9px;border-radius:7px}
+.goal-right{display:flex;align-items:center;gap:7px}
+.count{font-size:12px;color:var(--muted);min-width:45px;text-align:center}
+.small-btn{width:30px;height:30px;padding:0;border-radius:8px;background:#f1f4f7;color:#465467;display:grid;place-items:center}
+.goal-actions{display:flex;gap:3px;margin-left:5px}
+.empty{padding:32px;text-align:center;color:var(--muted);border:1px dashed #ccd5de;border-radius:15px}
+.empty strong{display:block;color:var(--text);margin-bottom:7px}
+.view{display:none}.view.active{display:block}
+.form{display:grid;grid-template-columns:1.5fr 1fr .65fr auto;gap:9px;margin:14px 0}
+input,select{width:100%;border:1px solid #dce3e9;border-radius:10px;padding:11px 12px;background:white;color:var(--text);outline:none}
+input:focus,select:focus{border-color:#69a99e;box-shadow:0 0 0 3px #e4f3ef}
+.history-list{display:grid;gap:12px}
+.history-item{display:grid;grid-template-columns:130px 1fr 65px;align-items:center;gap:15px}
+.history-week{font-weight:700;font-size:13px}
+.history-meta{font-size:11px;color:var(--muted);margin-top:4px}
+.bar{height:9px;background:#edf1f4;border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:99px}
+.history-pct{text-align:right;font-weight:750}
+.chart{height:220px;display:flex;align-items:flex-end;gap:12px;padding:15px 3px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.chart-col{flex:1;min-width:35px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:7px}
+.chart-bar{width:min(38px,80%);min-height:3px;background:linear-gradient(180deg,#958aff,#6658d3);border-radius:8px 8px 3px 3px}
+.chart-label{font-size:10px;color:var(--muted);white-space:nowrap}
+.chart-value{font-size:10px;font-weight:700}
+.toast{position:fixed;bottom:22px;right:22px;background:#18232e;color:white;padding:13px 17px;border-radius:12px;box-shadow:0 10px 30px #0002;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;font-size:13px}
+.toast.show{opacity:1;transform:translateY(0)}
+.modal-back{position:fixed;inset:0;background:#111b28a6;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
+.modal-back.show{display:flex}
+.modal{background:white;border-radius:18px;padding:24px;max-width:430px;width:100%;box-shadow:0 20px 60px #0003}
+.modal h3{margin:0 0 8px}
+.modal p{font-size:13px;color:var(--muted);line-height:1.55}
+.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
+footer{font-size:11px;color:#98a2af;text-align:center;padding:25px 0 8px}
+@media(max-width:800px){.app{grid-template-columns:1fr}aside{padding:13px 15px;gap:12px}.brand{padding:0 3px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:10px 12px}.side-note{display:none}main{padding:24px 16px}.topline{align-items:flex-start;flex-direction:column}.stats{grid-template-columns:1fr 1fr}.stats .card:last-child{grid-column:span 2}.progress-card{grid-template-columns:1fr}.form{grid-template-columns:1fr 1fr}.form input:first-child{grid-column:span 2}.form button{grid-column:span 2}.goal{padding:13px}.history-item{grid-template-columns:90px 1fr 45px;gap:9px}}
+@media(max-width:430px){.stats{grid-template-columns:1fr 1fr}.stat-value{font-size:25px}.card{padding:16px}.goal-right{gap:4px}.goal-actions{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="brand-mark">✓</div><div><h1>MY WEEK</h1><small>PROGRESO PERSONAL</small></div></div>
+  <nav class="nav">
+    <button class="active" data-view="dashboard"><span>▦</span> Dashboard</button>
+    <button data-view="goals"><span>☑</span> Mis objetivos</button>
+    <button data-view="history"><span>▤</span> Historial</button>
+  </nav>
+  <div class="side-note"><strong>Una semana a la vez.</strong>La constancia no se construye en un día. Se construye con pequeñas acciones repetidas.</div>
+</aside>
+<main>
+  <div class="topline">
+    <div><div class="eyebrow" id="eyebrow">TU SEMANA ACTUAL</div><h2 id="page-title">Semana 1</h2><p class="subtitle" id="page-subtitle">Definí tus objetivos. Después, avanzá de a uno.</p></div>
+    <div class="top-actions"><button class="secondary" id="export-btn">↓ Exportar</button><button id="quick-add">＋ Nuevo objetivo</button></div>
+  </div>
+
+  <section class="view active" id="dashboard">
+    <div class="grid stats">
+      <div class="card"><div class="stat-icon">✓</div><div class="stat-label">OBJETIVOS COMPLETADOS</div><div class="stat-value" id="stat-done">0</div><div class="stat-foot" id="stat-done-foot">de 0 objetivos</div></div>
+      <div class="card"><div class="stat-icon">◎</div><div class="stat-label">CUMPLIMIENTO SEMANAL</div><div class="stat-value" id="stat-percent">0%</div><div class="stat-foot">Objetivos completados</div></div>
+      <div class="card"><div class="stat-icon">↗</div><div class="stat-label">SEMANAS REGISTRADAS</div><div class="stat-value" id="stat-weeks">0</div><div class="stat-foot">Tu recorrido hasta hoy</div></div>
+    </div>
+    <div class="card progress-card">
+      <div><div class="eyebrow">PROGRESO DE ESTA SEMANA</div><div class="progress-number" id="main-percent">0%</div><div class="progress-track"><div class="progress-fill" id="main-fill" style="width:0%"></div></div><div class="progress-meta"><span id="progress-caption">Todavía hay objetivos por cumplir</span><span id="progress-count">0 / 0</span></div></div>
+      <div class="mini-summary"><div class="eyebrow">ENFOQUE</div><div class="big" id="focus-count">0 pendientes</div><div class="stat-foot">Cada objetivo cumplido suma a tu progreso.</div><button class="secondary" style="margin-top:13px;width:100%" onclick="switchView('goals')">Ver objetivos →</button></div>
+    </div>
+    <div class="section-head"><div><h3>Objetivos de la semana</h3><p>Marcá cada objetivo cuando lo hayas cumplido.</p></div><button class="secondary" onclick="switchView('goals')">Ver todos</button></div>
+    <div class="goal-list" id="dashboard-goals"></div>
+    <div class="section-head"><div><h3>Tu evolución</h3><p>Porcentaje de cumplimiento por semana.</p></div><button class="secondary" onclick="switchView('history')">Historial completo</button></div>
+    <div class="card"><div class="chart" id="dashboard-chart"></div></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:18px"><button id="close-week">✓ Cerrar semana</button></div>
+  </section>
+
+  <section class="view" id="goals">
+    <div class="card">
+      <div class="eyebrow">PLANIFICACIÓN</div><h3 style="margin:8px 0">Crear un objetivo</h3><p class="subtitle">Elegí qué querés lograr y cuántas veces esta semana.</p>
+      <form class="form" id="goal-form">
+        <input id="goal-name" placeholder="Ej. Entrenar en el gimnasio" maxlength="100" required>
+        <select id="goal-category"><option>Negocio</option><option>Salud</option><option>Aprendizaje</option><option>Finanzas</option><option>Desarrollo personal</option><option>Otros</option></select>
+        <input id="goal-target" type="number" min="1" max="99" value="1" aria-label="Frecuencia semanal" required>
+        <button type="submit">＋ Agregar</button>
+      </form>
+    </div>
+    <div class="section-head"><div><h3>Todos mis objetivos</h3><p id="goals-subtitle">Organizá tu semana a tu manera.</p></div></div>
+    <div class="goal-list" id="all-goals"></div>
+  </section>
+
+  <section class="view" id="history">
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">PROMEDIO HISTÓRICO</div><div class="stat-value" id="history-average">0%</div><div class="stat-foot">Cumplimiento promedio</div></div>
+      <div class="card"><div class="stat-label">MEJOR SEMANA</div><div class="stat-value" id="history-best">—</div><div class="stat-foot">Mayor cumplimiento</div></div>
+      <div class="card"><div class="stat-label">OBJETIVOS COMPLETADOS</div><div class="stat-value" id="history-completed">0</div><div class="stat-foot">En semanas cerradas</div></div>
+    </div>
+    <div class="section-head"><div><h3>Historial semanal</h3><p>Los registros cerrados quedan guardados.</p></div><button class="secondary" id="reset-all">Reiniciar desde semana 1</button><button class="secondary" id="clear-history">Limpiar historial</button></div>
+    <div class="history-list" id="history-list"></div>
+  </section>
+  <footer>MY WEEK · Tus datos se guardan localmente en este navegador.</footer>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-back" id="modal">
+ <div class="modal"><h3 id="modal-title">Cerrar semana</h3><p id="modal-copy">Se guardará el progreso de esta semana y se iniciará una nueva.</p><div class="modal-actions"><button class="secondary" id="modal-cancel">Cancelar</button><button id="modal-confirm">Confirmar</button></div></div>
+</div>
+<script>
+const KEY='myweek_data_v1';
+const defaultState={week:1,goals:[
+{id:1,name:'Entrenar 4 veces',category:'Salud',target:4,progress:0},
+{id:2,name:'Trabajar en el negocio',category:'Negocio',target:5,progress:0},
+{id:3,name:'Leer',category:'Aprendizaje',target:5,progress:0},
+{id:4,name:'Organizar mis finanzas',category:'Finanzas',target:1,progress:0}],history:[]};
+let state=loadState(),modalAction=null;
+function loadState(){try{const x=JSON.parse(localStorage.getItem(KEY));return x&&Array.isArray(x.goals)&&Array.isArray(x.history)?x:structuredClone(defaultState)}catch(e){return structuredClone(defaultState)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function pct(goals){return goals.length?Math.round(goals.filter(g=>g.progress>=g.target).length/goals.length*100):0}
+function done(goals){return goals.filter(g=>g.progress>=g.target).length}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
+function switchView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));const labels={dashboard:['TU SEMANA ACTUAL',`Semana ${state.week}`,'Definí tus objetivos. Después, avanzá de a uno.'],goals:['PLANIFICACIÓN','Mis objetivos','Organizá tus hábitos y metas semanales.'],history:['TU RECORRIDO','Historial','Cada semana cuenta. Mirá cómo venís avanzando.']};document.getElementById('eyebrow').textContent=labels[v][0];document.getElementById('page-title').textContent=labels[v][1];document.getElementById('page-subtitle').textContent=labels[v][2];}
+function goalCard(g){const isDone=g.progress>=g.target;return `<div class="goal ${isDone?'completed':''}"><div><div class="goal-top"><button class="check ${isDone?'done':''}" aria-label="Marcar cumplido" onclick="toggleGoal(${g.id})">${isDone?'✓':''}</button><span class="goal-name">${esc(g.name)}</span></div><span class="category">${esc(g.category)}</span></div><div class="goal-right"><button class="small-btn" aria-label="Restar progreso" onclick="changeProgress(${g.id},-1)" ${g.progress<=0?'disabled':''}>−</button><span class="count">${g.progress}/${g.target}</span><button class="small-btn" aria-label="Sumar progreso" onclick="changeProgress(${g.id},1)" ${g.progress>=g.target?'disabled':''}>＋</button><div class="goal-actions"><button class="ghost" title="Editar" onclick="editGoal(${g.id})">✎</button><button class="ghost" title="Eliminar" onclick="deleteGoal(${g.id})">×</button></div></div></div>`}
+function renderChart(elId,items){const el=document.getElementById(elId);if(!items.length){el.innerHTML='<div class="empty" style="width:100%">Cerrá tu primera semana para ver tu evolución.</div>';return}el.innerHTML=items.slice(-12).map(h=>`<div class="chart-col"><span class="chart-value">${h.percent}%</span><div class="chart-bar" style="height:${Math.max(3,h.percent)}%"></div><span class="chart-label">S${h.week}</span></div>`).join('')}
+function renderHistory(){const h=state.history;const avg=h.length?Math.round(h.reduce((s,x)=>s+x.percent,0)/h.length):0;const best=h.length?Math.max(...h.map(x=>x.percent)):null;document.getElementById('history-average').textContent=avg+'%';document.getElementById('history-best').textContent=best===null?'—':best+'%';document.getElementById('history-completed').textContent=h.reduce((s,x)=>s+x.completed,0);const list=document.getElementById('history-list');if(!h.length){list.innerHTML='<div class="empty"><strong>Tu historial está vacío</strong>Cuando cierres una semana, vas a encontrar acá tu progreso.</div>';return}list.innerHTML=[...h].reverse().map(x=>`<div class="card history-item"><div><div class="history-week">Semana ${x.week}</div><div class="history-meta">${x.completed}/${x.total} objetivos</div></div><div class="bar"><span style="width:${x.percent}%"></span></div><div class="history-pct">${x.percent}%</div></div>`).join('')}
+function render(){const goals=state.goals,p=pct(goals),d=done(goals),total=goals.length;document.getElementById('stat-done').textContent=d;document.getElementById('stat-done-foot').textContent=`de ${total} objetivos`;document.getElementById('stat-percent').textContent=p+'%';document.getElementById('stat-weeks').textContent=state.history.length;document.getElementById('main-percent').textContent=p+'%';document.getElementById('main-fill').style.width=p+'%';document.getElementById('progress-caption').textContent=total&&d===total?'¡Todos los objetivos cumplidos!':total?'Seguí avanzando, objetivo por objetivo.':'Agregá objetivos para comenzar';document.getElementById('progress-count').textContent=`${d} / ${total}`;document.getElementById('focus-count').textContent=`${total-d} pendientes`;document.getElementById('dashboard-goals').innerHTML=goals.length?goals.slice(0,5).map(goalCard).join(''):'<div class="empty"><strong>Todavía no hay objetivos</strong>Creá tu primer objetivo para empezar.</div>';document.getElementById('all-goals').innerHTML=goals.length?goals.map(goalCard).join(''):'<div class="empty"><strong>Tu lista está vacía</strong>Agregá objetivos usando el formulario de arriba.</div>';document.getElementById('goals-subtitle').textContent=`${total} objetivos · ${d} completados`;renderChart('dashboard-chart',state.history);renderHistory();document.getElementById('page-title').textContent=`Semana ${state.week}`}
+function toggleGoal(id){const g=state.goals.find(x=>x.id===id);if(!g)return;g.progress=g.progress>=g.target?0:g.target;save();toast(g.progress?'¡Objetivo completado!':'Objetivo reactivado')}
+function changeProgress(id,n){const g=state.goals.find(x=>x.id===id);if(!g)return;g.progress=Math.max(0,Math.min(g.target,g.progress+n));save();if(g.progress===g.target)toast('¡Objetivo completado!')}
+function addGoal(e){e.preventDefault();const name=document.getElementById('goal-name').value.trim(),category=document.getElementById('goal-category').value,target=Number(document.getElementById('goal-target').value);if(!name||!Number.isInteger(target)||target<1)return;state.goals.push({id:Date.now(),name,category,target,progress:0});document.getElementById('goal-form').reset();document.getElementById('goal-target').value=1;save();toast('Objetivo agregado')}
+function editGoal(id){const g=state.goals.find(x=>x.id===id);if(!g)return;const name=prompt('Editar nombre del objetivo:',g.name);if(name===null)return;if(!name.trim()){toast('El nombre no puede estar vacío');return}const targetText=prompt('Frecuencia semanal (número):',g.target);if(targetText===null)return;const target=Number(targetText);if(!Number.isInteger(target)||target<1||target>99){toast('Ingresá una frecuencia entre 1 y 99');return}g.name=name.trim();g.target=target;g.progress=Math.min(g.progress,target);save();toast('Objetivo actualizado')}
+function deleteGoal(id){if(!confirm('¿Eliminar este objetivo de la semana?'))return;state.goals=state.goals.filter(x=>x.id!==id);save();toast('Objetivo eliminado')}
+function openModal(action){modalAction=action;document.getElementById('modal-title').textContent=action==='close'?'¿Cerrar semana?':'¿Limpiar historial?';document.getElementById('modal-copy').textContent=action==='close'?`Se guardará la Semana ${state.week} con ${done(state.goals)} de ${state.goals.length} objetivos completados (${pct(state.goals)}%). Se iniciará una nueva semana con los objetivos reiniciados.`:action==='reset'?`Se borrará el historial y volverás a Semana 1. Tus objetivos actuales se conservarán y su progreso se reiniciará.`:'Esta acción elimina todos los registros de semanas anteriores. Tus objetivos actuales no se modificarán.';document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show');modalAction=null}
+function confirmModal(){if(modalAction==='close'){state.history.push({week:state.week,percent:pct(state.goals),completed:done(state.goals),total:state.goals.length,goals:state.goals.map(g=>({...g})),closedAt:new Date().toISOString()});state.week++;state.goals=state.goals.map(g=>({...g,progress:0}));save();toast('Semana guardada. ¡Vamos por la siguiente!')}else if(modalAction==='clear'){state.history=[];save();toast('Historial eliminado')}else if(modalAction==='reset'){state.history=[];state.week=1;state.goals=state.goals.map(g=>({...g,progress:0}));save();toast('Reiniciado desde Semana 1')}closeModal()}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+document.getElementById('goal-form').addEventListener('submit',addGoal);
+document.getElementById('quick-add').addEventListener('click',()=>{switchView('goals');document.getElementById('goal-name').focus()});
+document.getElementById('close-week').addEventListener('click',()=>openModal('close'));
+document.getElementById('clear-history').addEventListener('click',()=>openModal('clear'));
+document.getElementById('reset-all').addEventListener('click',()=>openModal('reset'));
+document.getElementById('modal-cancel').addEventListener('click',closeModal);
+document.getElementById('modal-confirm').addEventListener('click',confirmModal);
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.getElementById('export-btn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='my-week-backup.json';a.click();URL.revokeObjectURL(url);toast('Backup descargado')});
+render();
+</script>
+</body>
+</html>
